@@ -12,6 +12,8 @@ const routes: Routes = [
       { path: '', redirectTo: 'list', pathMatch: 'full' }
     ]
   },
+  { path: '', redirectTo: 'tasks/list', pathMatch: 'full' },
+  { path: '**', redirectTo: 'tasks/list', pathMatch: 'full' },
 ];
 
 @NgModule({
