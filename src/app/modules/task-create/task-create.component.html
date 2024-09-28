@@ -56,7 +56,7 @@
                 <div class="input-group mb-2">
                   <input [(ngModel)]="newSkill" class="form-control" placeholder="Ingrese habilidad" [ngModelOptions]="
                     {standalone: true}">
-                  <button (click)="addSkills(i)" class="btn btn-primary">Agregar Habilidad</button>
+                  <button (click)="addSkills(i)" class="btn bg-wine">Agregar</button>
                 </div>
                 <div *ngIf="persona.get('habilidades')?.errors?.['noSkills']">
                   Cada persona debe tener al menos una habilidad.
