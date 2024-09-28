@@ -1,0 +1,87 @@
+<div class="container">
+  <div class="header bg-white px-4 text-center p-2 mb-5 rounded-3">
+    <h1 class="m-0 text-wine">Lista de tareas</h1>
+  </div>
+  <div class="d-flex align-items-center justify-content-between">
+    <div class="d-flex align-items-baseline">
+      <h5 class="text-wine me-2">Filtros:</h5>
+      <ul class="nav nav-underline">
+        <li class="nav-item">
+          <a
+            class="nav-link text-wine pb-0"
+            [ngClass]="{ active: activeFilter === 'all' }"
+            (click)="setActiveFilter('all')"
+            >Todas</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link text-wine pb-0"
+            [ngClass]="{ active: activeFilter === 'completed' }"
+            (click)="setActiveFilter('completed')"
+            >Completas</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link text-wine pb-0"
+            [ngClass]="{ active: activeFilter === 'pending' }"
+            (click)="setActiveFilter('pending')"
+            >pendientes</a
+          >
+        </li>
+      </ul>
+    </div>
+
+    <button class="btn bg-wine mb-2 float-end me-1" routerLink="/tasks/create">
+      <img src="assets/add.svg" alt="add" />
+    </button>
+  </div>
+  <div class="card rounded-3 w-100">
+    <div class="card-body rounded-2">
+      <h6 *ngIf="taskList.length === 0 || filteredTasks.length==0">No hay tareas creadas</h6>
+      <ul class="list-group list-group-flush">
+        <li
+          *ngFor="let task of filteredTasks; let i = index"
+          class="list-group-item d-flex justify-content-between align-items-center"
+        >
+          <div>
+            <label class="text-wine d-flex align-items-center">
+              <input
+                [checked]="task.completed"
+                [disabled]="task.completed"
+                (change)="toggleComplete(task)"
+                type="checkbox"
+                style="margin-right: 10px"
+              />
+              <h6
+                class="m-0"
+                [ngClass]="{ 'text-decoration-line-through': task.completed }"
+              >
+                {{ task.nombreTarea }} - {{ task.fechaLimite }}
+              </h6>
+            </label>
+            <div>
+              <h6 class="m-1">Personas Asociadas:</h6>
+              <ul *ngFor="let persona of task.personas">
+                <li>
+                  {{ persona.nombre }}({{ persona.edad }})
+                  <div class="d-flex align-items-center">
+                    <h6 class="m-0">Habilidades: </h6>
+                    {{ persona.habilidades | joinByComma }}
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <img
+            class="float-end"
+            src="assets/close.svg"
+            alt="close"
+            (click)="deletePerson(task)"
+          />
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
