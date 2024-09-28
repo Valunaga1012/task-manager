@@ -1,1 +1,22 @@
 /* You can add global styles to this file, and also import other style files */
+.bg-pink {
+  background: #ffcdcc;
+}
+
+.text-wine {
+  color: #4a150b;
+}
+
+.bg-wine {
+  background: #4a150b;
+  color: white;
+}
+.bg-wine:hover {
+  background: #4a150b;
+  color: white;
+}
+
+body {
+  background: var(--bg-pink);
+  height: 100px;
+}

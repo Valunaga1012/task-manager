@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { JoinByCommaPipe } from './core/pipes/join-by-comma.pipe';
 
 @NgModule({
   declarations: [

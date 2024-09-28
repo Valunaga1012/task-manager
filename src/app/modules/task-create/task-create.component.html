@@ -1,0 +1,88 @@
+<div class="container">
+  <div class="header bg-white px-4 text-center p-2 mb-5 rounded-5">
+    <h1 class="m-0 text-wine">Crear Tarea</h1>
+  </div>
+
+  <div class="card px-5 pt-3">
+    <div class="card-body">
+      <form [formGroup]="taskForm">
+        <div class="form-group mb-3">
+          <label class="form-label">Nombre de la tarea:</label>
+          <div>
+            <input type="text" formControlName="nombreTarea" class="form-control" placeholder="Ingrese el nombre de la tarea">
+          </div>
+        </div>
+
+        <div class="form-group mb-3">
+          <label class="form-label">Fecha límite:</label>
+          <div>
+            <input type="date" formControlName="fechaLimite" class="form-control">
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <h5>Personas Asociadas:</h5>
+          <div formArrayName="personas">
+            <div *ngFor="let persona of personas.controls; let i = index" [formGroupName]="i" class="mb-3">
+              <div class="form-group mb-3">
+                <label class="form-label">Nombre completo:</label>
+                <div>
+                  <input type="text" formControlName="nombre" class="form-control" placeholder="Ingrese el nombre">
+                  <div *ngIf="persona.get('nombre')?.errors?.['required'] && persona.get('nombre')?.touched">
+                    El nombre es requerido.
+                </div>
+                <div *ngIf="taskForm.get('personas')?.errors?.['duplicateNames']">
+                  Los nombres no pueden repetirse entre las personas asociadas a la misma tarea.
+                </div>
+                </div>
+              </div>
+
+              <div class="form-group mb-3">
+                <label class="form-label">Edad:</label>
+                <div>
+                  <input type="number" formControlName="edad" class="form-control" placeholder="Edad">
+                  <div *ngIf="persona.get('edad')?.errors?.['required'] && persona.get('edad')?.touched">
+                    La edad es requerida.
+                </div>
+                <div *ngIf="persona.get('edad')?.errors?.['min'] && persona.get('edad')?.touched">
+                  La edad debe ser mayor a 18.
+                </div>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <h6>Habilidades:</h6>
+
+                <div class="input-group mb-2">
+                  <input [(ngModel)]="newSkill" class="form-control" placeholder="Ingrese habilidad" [ngModelOptions]="
+                    {standalone: true}">
+                  <button (click)="addSkills(i)" class="btn btn-primary">Agregar Habilidad</button>
+                </div>
+                <div *ngIf="persona.get('habilidades')?.errors?.['noSkills']">
+                  Cada persona debe tener al menos una habilidad.
+              </div>
+
+                <div class="mt-2">
+                  <span *ngFor="let habilidad of persona.get('habilidades')?.value; let j = index" class="tag">
+                    {{ habilidad }} <span class="remove" (click)="deleteSkill(i, j)">&times;</span>
+                  </span>
+
+                </div>
+              </div>
+
+              <button (click)="deletePerson(i)" class="btn btn-danger mb-3">Eliminar Persona</button>
+            </div>
+          </div>
+          <div class="mb-3">
+            <button class="btn btn-success" type="button" (click)="addPerson()">Añadir Persona</button>
+          </div>
+        </div>
+
+        <div class="text-end">
+          <button class="btn bg-wine me-2" (click)="saveTask()" [disabled]="taskForm.invalid" type="submit">Guardar Tarea</button>
+          <button class="btn btn-light" routerLink="/tasks/list">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
